@@ -20,8 +20,8 @@ module aion.gui {
     requires BIP39;
     requires richtextfx;
     requires flowless;
-    requires libnsc;
     requires core;
+    requires zxing;
 
     exports org.aion;
     exports org.aion.gui.controller;
