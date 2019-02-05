@@ -19,12 +19,12 @@ apply plugin: "de.undercouch.download" //version: '3.4.3'
 sourceSets {
     main {
         resources {
-            srcDirs = ['resources']
+            srcDirs = ['src/main/resources']
         }
     }
     test {
         resources {
-            srcDirs = ['test/resources']
+            srcDirs = ['src/test/resources']
         }
     }
 }
