@@ -46,11 +46,11 @@ import org.aion.api.type.BlockDetails;
 import org.aion.api.type.MsgRsp;
 import org.aion.api.type.TxArgs;
 import org.aion.api.type.TxDetails;
-import org.aion.base.type.Address;
-import org.aion.base.util.ByteArrayWrapper;
-import org.aion.base.util.TypeConverter;
 import org.aion.gui.events.EventPublisher;
 import org.aion.log.AionLoggerFactory;
+import org.aion.types.Address;
+import org.aion.types.ByteArrayWrapper;
+import org.aion.util.string.StringUtils;
 import org.aion.wallet.account.AccountManager;
 import org.aion.wallet.connector.dto.BlockDTO;
 import org.aion.wallet.connector.dto.SendTransactionDTO;
@@ -234,14 +234,12 @@ public class TransactionProcessor extends AbstractAionApiClient {
                 final long blockNumber = blockDetails.getNumber();
                 for (final String address : addresses) {
                     final List<TransactionDTO> newTxs =
-                            blockDetails
-                                    .getTxDetails()
-                                    .stream()
+                            blockDetails.getTxDetails().stream()
                                     .filter(
                                             t ->
-                                                    TypeConverter.toJsonHex(t.getFrom().toString())
+                                                StringUtils.toJsonHex(t.getFrom().toString())
                                                                     .equals(address)
-                                                            || TypeConverter.toJsonHex(
+                                                            || StringUtils.toJsonHex(
                                                                             t.getTo().toString())
                                                                     .equals(address))
                                     .map(t -> mapTransaction(t, timestamp, blockNumber))
@@ -261,8 +259,7 @@ public class TransactionProcessor extends AbstractAionApiClient {
                 transaction.getFrom().toString(),
                 transaction.getTo().toString(),
                 transaction.getTxHash().toString(),
-                TypeConverter.StringHexToBigInteger(
-                        TypeConverter.toJsonHex(transaction.getValue())),
+                StringUtils.StringHexToBigInteger(StringUtils.toJsonHex(transaction.getValue())),
                 transaction.getNrgConsumed(),
                 transaction.getNrgPrice(),
                 timeStamp,
@@ -290,8 +287,8 @@ public class TransactionProcessor extends AbstractAionApiClient {
         final BigInteger latestTransactionNonce = getLatestTransactionNonce(dto.getFrom());
         TxArgs txArgs =
                 new TxArgs.TxArgsBuilder()
-                        .from(new Address(TypeConverter.toJsonHex(dto.getFrom())))
-                        .to(new Address(TypeConverter.toJsonHex(dto.getTo())))
+                        .from(new Address(StringUtils.toJsonHex(dto.getFrom())))
+                        .to(new Address(StringUtils.toJsonHex(dto.getTo())))
                         .value(dto.getValue())
                         .nonce(latestTransactionNonce)
                         .data(new ByteArrayWrapper(dto.getData()))

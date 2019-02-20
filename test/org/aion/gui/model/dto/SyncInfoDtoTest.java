@@ -99,7 +99,7 @@ public class SyncInfoDtoTest {
         long blockNum = 20531;
         ApiMsg secondMsg = new ApiMsg();
         when(chain.blockNumber()).thenReturn(secondMsg);
-        secondMsg.set(Long.valueOf(blockNum), ApiMsg.cast.LONG);
+        secondMsg.set(blockNum, ApiMsg.cast.LONG);
 
         unit = new SyncInfoDto(kernelConnection, null /*IApiMsgErrorHandler*/);
         unit.loadFromApiInternal();

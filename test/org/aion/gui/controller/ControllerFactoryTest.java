@@ -70,7 +70,7 @@ public class ControllerFactoryTest {
                         .withKernelConnection(kernelConnection)
                         .withKernelLauncher(kernelLauncher);
         ZeroArgConstructor result = (ZeroArgConstructor) unit.call(ZeroArgConstructor.class);
-        assertThat(result instanceof ZeroArgConstructor, is(true));
+        assertThat(result != null, is(true));
     }
 
     @Test(expected = IllegalArgumentException.class)

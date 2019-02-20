@@ -183,7 +183,7 @@ public class KernelLauncher {
             String message =
                     String.format(
                             "Failed to capture the PID of the Aion kernel "
-                                    + "process.  Wrapper script exited with shell code %d",
+                                    + "process.  ByteArrayWrapper script exited with shell code %d",
                             proc.exitValue());
             LOGGER.error(message, ex);
             LOGGER.info(String.format("wrapper script stdout was: %s", pid));

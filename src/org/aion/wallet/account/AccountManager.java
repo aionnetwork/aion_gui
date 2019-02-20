@@ -51,7 +51,6 @@ import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
-import org.aion.base.util.TypeConverter;
 import org.aion.crypto.ECKey;
 import org.aion.crypto.ECKeyFac;
 import org.aion.gui.events.EventPublisher;
@@ -62,6 +61,7 @@ import org.aion.log.LogEnum;
 import org.aion.mcf.account.Keystore;
 import org.aion.mcf.account.KeystoreFormat;
 import org.aion.mcf.account.KeystoreItem;
+import org.aion.util.string.StringUtils;
 import org.aion.wallet.connector.dto.BlockDTO;
 import org.aion.wallet.connector.dto.SendTransactionDTO;
 import org.aion.wallet.console.ConsoleManager;
@@ -237,7 +237,7 @@ public class AccountManager {
         }
         final ECKey derivedKey = getEcKeyFromRoot(derivationIndex);
         final String address =
-                TypeConverter.toJsonHex(derivedKey.computeAddress(derivedKey.getPubKey()));
+            StringUtils.toJsonHex(derivedKey.computeAddress(derivedKey.getPubKey()));
         AccountDTO recoveredAccount = addressToAccount.get(address);
         if (recoveredAccount != null) {
             recoveredAccount.setPrivateKey(derivedKey.getPrivKeyBytes());
@@ -255,7 +255,7 @@ public class AccountManager {
         }
         final ECKey derivedKey = getEcKeyFromRoot(derivationIndex);
         final String address =
-                TypeConverter.toJsonHex(derivedKey.computeAddress(derivedKey.getPubKey()));
+            StringUtils.toJsonHex(derivedKey.computeAddress(derivedKey.getPubKey()));
         return createAccountWithPrivateKey(
                 address, derivedKey.getPrivKeyBytes(), false, derivationIndex);
     }
@@ -277,7 +277,7 @@ public class AccountManager {
             final String password,
             final boolean shouldKeep)
             throws UnsupportedEncodingException, ValidationException {
-        String address = TypeConverter.toJsonHex(KeystoreItem.parse(fileContent).getAddress());
+        String address = StringUtils.toJsonHex(KeystoreItem.parse(fileContent).getAddress());
         final AccountDTO accountDTO;
         if (shouldKeep) {
             if (!keystoreWrapper.exist(address)) {

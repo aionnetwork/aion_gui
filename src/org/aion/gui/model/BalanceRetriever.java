@@ -24,7 +24,7 @@ package org.aion.gui.model;
 
 import java.math.BigInteger;
 import org.aion.api.type.ApiMsg;
-import org.aion.base.type.Address;
+import org.aion.types.Address;
 
 public class BalanceRetriever extends AbstractAionApiClient {
 

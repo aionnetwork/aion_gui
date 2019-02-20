@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import org.aion.base.util.TypeConverter;
+import org.aion.util.string.StringUtils;
 import org.aion.wallet.connector.dto.BlockDTO;
 import org.aion.wallet.connector.dto.SendTransactionDTO;
 import org.aion.wallet.util.QRCodeUtils;
@@ -58,7 +58,7 @@ public class AccountDTO {
             boolean isImported,
             int derivationIndex) {
         this.name = name;
-        this.publicAddress = TypeConverter.toJsonHex(publicAddress);
+        this.publicAddress = StringUtils.toJsonHex(publicAddress);
         this.balance = balance;
         this.currency = currency;
         this.qrCode = QRCodeUtils.writeQRCode(publicAddress);

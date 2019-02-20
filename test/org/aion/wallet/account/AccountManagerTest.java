@@ -45,12 +45,12 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
-import org.aion.base.util.TypeConverter;
 import org.aion.crypto.ECKey;
 import org.aion.gui.events.EventPublisher;
 import org.aion.gui.model.BalanceRetriever;
 import org.aion.gui.util.AionConstants;
 import org.aion.mcf.account.KeystoreFormat;
+import org.aion.util.string.StringUtils;
 import org.aion.wallet.connector.dto.BlockDTO;
 import org.aion.wallet.connector.dto.SendTransactionDTO;
 import org.aion.wallet.console.ConsoleManager;
@@ -177,7 +177,7 @@ public class AccountManagerTest {
         assertThat(unit.getAccounts().get(0).getPrivateKey(), is(derivedKey.getPrivKeyBytes()));
         assertThat(
                 unit.getAccounts().get(0).getPublicAddress(),
-                is(TypeConverter.toJsonHex(derivedKey.computeAddress(derivedKey.getPubKey()))));
+                is(StringUtils.toJsonHex(derivedKey.computeAddress(derivedKey.getPubKey()))));
         // verify master account is stored
         verify(walletStorage).setMasterAccountMnemonic(mnemonic, password);
         verify(walletStorage).incrementMasterAccountDerivations();
@@ -220,7 +220,7 @@ public class AccountManagerTest {
         assertThat(unit.getAccounts().get(0).getPrivateKey(), is(derivedKey.getPrivKeyBytes()));
         assertThat(
                 unit.getAccounts().get(0).getPublicAddress(),
-                is(TypeConverter.toJsonHex(derivedKey.computeAddress(derivedKey.getPubKey()))));
+                is(StringUtils.toJsonHex(derivedKey.computeAddress(derivedKey.getPubKey()))));
         assertThat(unit.getAccounts().get(0).getDerivationIndex(), is(0));
         // verify master account is stored
         verify(walletStorage).setMasterAccountMnemonic(mnemonic, password);
@@ -261,10 +261,10 @@ public class AccountManagerTest {
                 new MasterKey(CryptoUtils.generateSha512HashedBip39ECKey(mnemonic));
         ECKey derivedKey1 = rootMasterKey.deriveHardened(new int[] {44, 425, 0, 0, 0});
         String address1 =
-                TypeConverter.toJsonHex(derivedKey1.computeAddress(derivedKey1.getPubKey()));
+            StringUtils.toJsonHex(derivedKey1.computeAddress(derivedKey1.getPubKey()));
         ECKey derivedKey2 = rootMasterKey.deriveHardened(new int[] {44, 425, 0, 0, 1});
         String address2 =
-                TypeConverter.toJsonHex(derivedKey2.computeAddress(derivedKey2.getPubKey()));
+            StringUtils.toJsonHex(derivedKey2.computeAddress(derivedKey2.getPubKey()));
         String[] accountList = new String[] {address1};
         when(keystoreWrapper.list()).thenReturn(accountList);
 
@@ -307,7 +307,7 @@ public class AccountManagerTest {
                 new MasterKey(CryptoUtils.generateSha512HashedBip39ECKey(mnemonic));
         ECKey derivedKey1 = rootMasterKey.deriveHardened(new int[] {44, 425, 0, 0, 0});
         String address1 =
-                TypeConverter.toJsonHex(derivedKey1.computeAddress(derivedKey1.getPubKey()));
+            StringUtils.toJsonHex(derivedKey1.computeAddress(derivedKey1.getPubKey()));
         String[] accountList = new String[] {address1};
         when(keystoreWrapper.list()).thenReturn(accountList);
 
@@ -367,7 +367,7 @@ public class AccountManagerTest {
                         eventPublisher);
 
         String pubAddressString =
-                TypeConverter.toJsonHex(derivedKey1.computeAddress(derivedKey1.getPubKey()));
+                StringUtils.toJsonHex(derivedKey1.computeAddress(derivedKey1.getPubKey()));
 
         boolean shouldKeep = false;
         addressToAccount.put(pubAddressString, mock(AccountDTO.class));
@@ -404,7 +404,7 @@ public class AccountManagerTest {
                         eventPublisher);
 
         String pubAddressString =
-                TypeConverter.toJsonHex(derivedKey1.computeAddress(derivedKey1.getPubKey()));
+                StringUtils.toJsonHex(derivedKey1.computeAddress(derivedKey1.getPubKey()));
 
         boolean shouldKeep = false;
         unit.importKeystore(keystoreBytes, password, shouldKeep);
@@ -440,7 +440,7 @@ public class AccountManagerTest {
                         eventPublisher);
 
         String pubAddressString =
-                TypeConverter.toJsonHex(derivedKey1.computeAddress(derivedKey1.getPubKey()));
+                StringUtils.toJsonHex(derivedKey1.computeAddress(derivedKey1.getPubKey()));
         ArgumentCaptor<ECKey> keystoreCreateECKeyCapture = ArgumentCaptor.forClass(ECKey.class);
         when(keystoreWrapper.create(
                         eq(password),
@@ -479,7 +479,7 @@ public class AccountManagerTest {
                         eventPublisher);
 
         String password = "myPassword";
-        String pubAddressString = TypeConverter.toJsonHex(key.computeAddress(key.getPubKey()));
+        String pubAddressString = StringUtils.toJsonHex(key.computeAddress(key.getPubKey()));
         ArgumentCaptor<ECKey> keystoreCreateECKeyCapture = ArgumentCaptor.forClass(ECKey.class);
         when(keystoreWrapper.create(
                         eq(password),
@@ -520,7 +520,7 @@ public class AccountManagerTest {
                         eventPublisher);
 
         String password = "myPassword";
-        String pubAddressString = TypeConverter.toJsonHex(key.computeAddress(key.getPubKey()));
+        String pubAddressString = StringUtils.toJsonHex(key.computeAddress(key.getPubKey()));
         ArgumentCaptor<ECKey> keystoreCreateECKeyCapture = ArgumentCaptor.forClass(ECKey.class);
         when(keystoreWrapper.create(
                         eq(password),

@@ -2,9 +2,10 @@ module aion.gui {
     requires aion.log;
     requires aion.mcf;
     requires aion.zero.impl;
-    requires aion.base;
+    requires aion.util;
     requires aion.crypto;
     requires aion.api.client;
+    requires aion.vm.api;
 
     uses org.aion.log.AionLoggerFactory;
 
